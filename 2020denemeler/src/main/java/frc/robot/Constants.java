@@ -17,33 +17,46 @@ package frc.robot;
  */
 public final class Constants {
     public static final class DriveConstants{
-        public static final int driveMotor1= 4;
-        public static final int driveMotor2= 5;
-        public static final int driveMotor3= 6;
-        public static final int driveMotor4= 7;
+        public static final int arkaSol= 1;
+        public static final int onSol= 2;
+        public static final int onSag= 0;
+        public static final int arkaSag= 3;
 
-        public static final int[] DriveLeftEncoderPorts = {4,5};
-        public static final int[] DriveRightEncoderPorts = {6,7};
+        public static final int[] DriveLeftEncoderPorts = {0,1};
+        public static final int[] DriveRightEncoderPorts = {2,3};
+
+        public static final double distancePerPulse = Math.PI* 0.1525f /1024f;
+
+        public static final float kS=0.5f;
+        public static final float kV=0.4f;
+        public static final float kA= 0.6f;
+
+        public static final float kP = 0.05f;
+
+
 
     }
     public static final class   ShooterConstants{
-        public static final int MotorPWM1=1;
-        public static final int MotorPWM2 =2;
+        public static final int LeftMotorID=0;
+        public static final int RightMotorID =1;
 
         public static final int feederMotorPWM =3;
 
-        public static final int[] LeftEncoderPorts = {0,1};
-        public static final int[] RightEncoderPorts = {2,3};
+        public static final int[] LeftEncoderPorts = {4,5};
+        public static final int[] RightEncoderPorts = {6,7};
 
         public static final float kV = 0.9f;
         public static final float kP = 0.05f;
-        public static final float feederSpeed =0.5f;
+        public static final float feederSpeed =0.4f;
+        public static final float feederBackUpSpeed =0.4f;
 
         public static final double  setPointRPS =3;
         public static final double positionSetPointTolerance = 1;
         public static final double velocitySetPointTolerance = 0.54;
 
-        public static final double encoderPPR =  1/600;
+        public static final double freeSpeed =0.5f; 
+
+        public static final double encoderRPP =  1/2400;
     
     }
     
@@ -53,3 +66,4 @@ public final class Constants {
 
     
 }
+

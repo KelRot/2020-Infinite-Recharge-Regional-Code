@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveDistance;
-import frc.robot.commands.FeederControl;
 import frc.robot.commands.ReadyShooters;
 import frc.robot.subsystems.Drive;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
@@ -35,13 +35,24 @@ public class RobotContainer {
     private final Shooter shooter_subsystem = new Shooter();
    
     public final Drive driveSubsystem= new Drive();
-    private final FeederControl feederControl = new FeederControl(shooter_subsystem);
+  //  private final FeederControl feederControl = new FeederControl(shooter_subsystem);
     private final ReadyShooters readyShooters = new ReadyShooters(shooter_subsystem);
     private final DriveCommand driveCommand = new DriveCommand(driveSubsystem, joystick);
     
     private final DriveDistance autoCommand = new DriveDistance(driveSubsystem, 3);
 
-    private final Command Shoot =  new ParallelCommandGroup(feederControl,readyShooters);
+    private final Command Shoot =  
+    new ParallelCommandGroup(
+      new ConditionalCommand(
+        //koşul olursa
+            new InstantCommand(shooter_subsystem::feederFeed),
+        //koşul olmazsa
+            new InstantCommand(shooter_subsystem::feederBackUp), 
+
+            //koşul
+            shooter_subsystem::atSetpoint),
+      
+       readyShooters);
     
    
     
@@ -64,6 +75,7 @@ public class RobotContainer {
     new JoystickButton(joystick, Button.kA.value).whileHeld(Shoot).whenReleased(
       new ParallelCommandGroup(new InstantCommand(shooter_subsystem::stopFeeder),new InstantCommand(shooter_subsystem::stopFeeder)));
 
+      new JoystickButton(joystick, Button.kX.value).whileHeld(new InstantCommand(shooter_subsystem::useShootersFree)).whenReleased(new InstantCommand(shooter_subsystem::stopShooters));
   }
 
 

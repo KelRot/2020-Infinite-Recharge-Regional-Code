@@ -7,6 +7,10 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -20,10 +24,11 @@ public class Shooter extends SubsystemBase {
    * Creates a new ExampleSubsystem.
    */
   
-   private final VictorSP leftMotor= new VictorSP(ShooterConstants.MotorPWM1);
-   private final VictorSP rightMotor= new VictorSP(ShooterConstants.MotorPWM2);
+   private final VictorSPX leftMotor= new VictorSPX(ShooterConstants.LeftMotorID);
+   private final VictorSPX rightMotor= new VictorSPX(ShooterConstants.RightMotorID);
 
-   private final VictorSP feederMotor = new VictorSP(ShooterConstants.feederMotorPWM);
+
+   private final VictorSP feederMotor = new VictorSP(9);
 
    private final Encoder leftEncoder = new Encoder(ShooterConstants.LeftEncoderPorts[0],
                                                    ShooterConstants.LeftEncoderPorts[1]);
@@ -41,8 +46,15 @@ public class Shooter extends SubsystemBase {
   controllerLeft.setTolerance(ShooterConstants.positionSetPointTolerance,ShooterConstants.velocitySetPointTolerance);
   controllerRight.setTolerance(ShooterConstants.positionSetPointTolerance,ShooterConstants.velocitySetPointTolerance);
        
-  leftEncoder.setDistancePerPulse(ShooterConstants.encoderPPR);
-  rightEncoder.setDistancePerPulse(ShooterConstants.encoderPPR);
+  leftMotor.configVoltageCompSaturation(12);
+  rightMotor.configVoltageCompSaturation(12);
+
+  leftMotor.enableVoltageCompensation(true);
+  rightMotor.enableVoltageCompensation(true);
+
+
+  leftEncoder.setDistancePerPulse(ShooterConstants.encoderRPP);
+  rightEncoder.setDistancePerPulse(ShooterConstants.encoderRPP);
       
          
         
@@ -50,8 +62,10 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
+    System.out.print("SOL ENCODER: "+leftEncoder.get());
+    System.out.print("RIGHT ENCODER: "+rightEncoder.get()+"\n");
 
-}
+  }
 
 
 
@@ -63,10 +77,15 @@ public class Shooter extends SubsystemBase {
     double leftOutput = feedforward.calculate(setPoint) + controllerLeft.calculate(leftEncoder.getRate(), setPoint);
     double rightOutput = feedforward.calculate(setPoint) + controllerRight.calculate(rightEncoder.getRate(), setPoint);
     
-    leftMotor.setVoltage(leftOutput);
-    rightMotor.setVoltage(rightOutput);
+    leftMotor.set(ControlMode.Current,leftOutput);
+    rightMotor.set(ControlMode.Current, rightOutput);
     
 
+  }
+
+  public void useShootersFree(){
+    leftMotor.set(ControlMode.PercentOutput, ShooterConstants.freeSpeed);
+    rightMotor.set(ControlMode.PercentOutput  , -ShooterConstants.freeSpeed);
   }
 
   public boolean atSetpoint(){
@@ -81,13 +100,21 @@ public class Shooter extends SubsystemBase {
       feederMotor.setSpeed(-ShooterConstants.feederSpeed);
   }
 
+  public void feederBackUp(){
+    feederMotor.set(-ShooterConstants.feederBackUpSpeed);
+  }
+
+  public void feederFeed(){
+     feederMotor.set(ShooterConstants.feederSpeed);
+  }
+
 
   public void stopFeeder(){
    feederMotor.setSpeed(0);
   }
 
   public void stopShooters(){
-    leftMotor.setVoltage(0);
-    rightMotor.setVoltage(0);
+    leftMotor.set(VictorSPXControlMode.PercentOutput,0);
+    rightMotor.set(VictorSPXControlMode.PercentOutput,0);
   }
 }
