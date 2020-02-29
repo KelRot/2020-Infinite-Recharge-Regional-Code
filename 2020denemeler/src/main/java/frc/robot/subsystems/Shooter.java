@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.VictorSP;
+
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -28,7 +28,7 @@ public class Shooter extends SubsystemBase {
    private final VictorSPX rightMotor= new VictorSPX(ShooterConstants.RightMotorID);
 
 
-   private final VictorSP feederMotor = new VictorSP(9);
+  
 
    private final Encoder leftEncoder = new Encoder(ShooterConstants.LeftEncoderPorts[0],
                                                    ShooterConstants.LeftEncoderPorts[1]);
@@ -93,25 +93,9 @@ public class Shooter extends SubsystemBase {
     return controllerRight.atSetpoint() && controllerLeft.atSetpoint();
   }
 
-  public void useFeeder(boolean reversed){
-      if(reversed)
-      feederMotor.setSpeed(-ShooterConstants.feederSpeed);
-      else
-      feederMotor.setSpeed(-ShooterConstants.feederSpeed);
-  }
-
-  public void feederBackUp(){
-    feederMotor.set(-ShooterConstants.feederBackUpSpeed);
-  }
-
-  public void feederFeed(){
-     feederMotor.set(ShooterConstants.feederSpeed);
-  }
+ 
 
 
-  public void stopFeeder(){
-   feederMotor.setSpeed(0);
-  }
 
   public void stopShooters(){
     leftMotor.set(VictorSPXControlMode.PercentOutput,0);

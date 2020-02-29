@@ -42,24 +42,34 @@ public final class Constants {
 
         public static final int feederMotorPWM =3;
 
-        public static final int[] LeftEncoderPorts = {4,5};
-        public static final int[] RightEncoderPorts = {6,7};
+        public static final int[] LeftEncoderPorts = {0,1};
+        public static final int[] RightEncoderPorts = {2,3};
 
         public static final float kV = 0.9f;
         public static final float kP = 0.05f;
-        public static final float feederSpeed =0.4f;
-        public static final float feederBackUpSpeed =0.4f;
-
+    
         public static final double  setPointRPS =3;
         public static final double positionSetPointTolerance = 1;
         public static final double velocitySetPointTolerance = 0.54;
 
         public static final double freeSpeed =0.5f; 
 
-        public static final double encoderRPP =  1/2400;
+        public static final double encoderRPP =  3f/2400f;
     
     }
+    public static final class   FeederConstants{
+        public static final int upMotorID=0;
+        public static final int downMotorID =1;
+
+        public static final double feederSpeed=0.4f;
+        
+        public static final int intakeSensorPort=0;
+        public static final int shooterSensorPort=1;
+
     
+
+    
+    }
 
 
 

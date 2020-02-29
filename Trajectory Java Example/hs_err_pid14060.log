@@ -1,0 +1,196 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 67108864 bytes for Failed to commit area from 0x00000000fc000000 to 0x0000000100000000 of length 67108864.
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (c:/cygwin64/tmp/openjdk-jdk11u-windows-x64-hotspot/workspace/build/src/src/hotspot/os/windows/os_windows.cpp:3281), pid=14060, tid=1480
+#
+# JRE version:  (11.0.4+11) (build )
+# Java VM: OpenJDK 64-Bit Server VM (11.0.4+11, mixed mode, aot, sharing, tiered, compressed oops, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Xmx64m -Xms64m -Dorg.gradle.appname=gradlew org.gradle.wrapper.GradleWrapperMain build
+
+Host: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz, 8 cores, 7G,  Windows 10 , 64 bit Build 18362 (10.0.18362.329)
+Time: Fri Jan 24 17:01:33 2020 Türkiye Standart Saati elapsed time: 0 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000020cd2403800):  JavaThread "Unknown thread" [_thread_in_vm, id=1480, stack(0x0000002415800000,0x0000002415900000)]
+
+Stack: [0x0000002415800000,0x0000002415900000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x5d700a]
+V  [jvm.dll+0x70bbce]
+V  [jvm.dll+0x70d25b]
+V  [jvm.dll+0x70d923]
+V  [jvm.dll+0x23f5f8]
+V  [jvm.dll+0x5d454a]
+V  [jvm.dll+0x5c9285]
+V  [jvm.dll+0x2f3e8c]
+V  [jvm.dll+0x2f3d12]
+V  [jvm.dll+0x2f89c6]
+V  [jvm.dll+0x339e9f]
+V  [jvm.dll+0x3398d0]
+V  [jvm.dll+0x2d1d08]
+V  [jvm.dll+0x2d2e56]
+V  [jvm.dll+0x6e7d17]
+V  [jvm.dll+0x6e949f]
+V  [jvm.dll+0x346d79]
+V  [jvm.dll+0x6ceb50]
+V  [jvm.dll+0x3adfef]
+V  [jvm.dll+0x3b0371]
+C  [java.exe+0x35fb]
+C  [java.exe+0x1986c]
+C  [KERNEL32.DLL+0x17bd4]
+C  [ntdll.dll+0x6ced1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x0000020cd01d71c0, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x0000020cd241a800 GCTaskThread "GC Thread#0" [stack: 0x0000002415900000,0x0000002415a00000] [id=2692]
+  0x0000020cd2425000 ConcurrentGCThread "G1 Main Marker" [stack: 0x0000002415a00000,0x0000002415b00000] [id=21096]
+  0x0000020cd2427800 ConcurrentGCThread "G1 Conc#0" [stack: 0x0000002415b00000,0x0000002415c00000] [id=19492]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffb5a6b0927]
+
+VM state:not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x0000020cd24014a0] Heap_lock - owner thread: 0x0000020cd2403800
+
+Heap address: 0x00000000fc000000, size: 64 MB, Compressed Oops mode: Non-zero based: 0x00000000fc000000
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff7f51d0000 - 0x00007ff7f521a000 	C:\Users\Public\wpilib\2020\jdk\bin\java.exe
+0x00007ffbba160000 - 0x00007ffbba350000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffbb9f20000 - 0x00007ffbb9fd2000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffbb7a10000 - 0x00007ffbb7cb3000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffbb8b90000 - 0x00007ffbb8d24000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffbb7da0000 - 0x00007ffbb7dc1000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffbb91a0000 - 0x00007ffbb91c6000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffbb7870000 - 0x00007ffbb7a04000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffbb7f70000 - 0x00007ffbb800e000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffbb7df0000 - 0x00007ffbb7eea000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffba80c0000 - 0x00007ffba8345000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.592_none_e6c0b1911312be02\COMCTL32.dll
+0x00007ffbb92d0000 - 0x00007ffbb936e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffbb8750000 - 0x00007ffbb8a86000 	C:\WINDOWS\System32\combase.dll
+0x00007ffbb8e70000 - 0x00007ffbb8f90000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffbb7ef0000 - 0x00007ffbb7f70000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffbb9ca0000 - 0x00007ffbb9cce000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffb834e0000 - 0x00007ffb834f7000 	C:\Users\Public\wpilib\2020\jdk\bin\vcruntime140.dll
+0x00007ffb5b9b0000 - 0x00007ffb5ba49000 	C:\Users\Public\wpilib\2020\jdk\bin\msvcp140.dll
+0x00007ffb5a3d0000 - 0x00007ffb5ae86000 	C:\Users\Public\wpilib\2020\jdk\bin\server\jvm.dll
+0x00007ffbb9b40000 - 0x00007ffbb9be3000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffbb8af0000 - 0x00007ffbb8b87000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffbb9370000 - 0x00007ffbb9378000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffba4550000 - 0x00007ffba4559000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffbb4820000 - 0x00007ffbb4844000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffbaeac0000 - 0x00007ffbaeaca000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffbb8e00000 - 0x00007ffbb8e6f000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffbb47f0000 - 0x00007ffbb481d000 	C:\WINDOWS\SYSTEM32\winmmbase.dll
+0x00007ffbb81c0000 - 0x00007ffbb820a000 	C:\WINDOWS\System32\cfgmgr32.dll
+0x00007ffbb70b0000 - 0x00007ffbb70c1000 	C:\WINDOWS\System32\kernel.appcore.dll
+0x00007ffb834d0000 - 0x00007ffb834e0000 	C:\Users\Public\wpilib\2020\jdk\bin\verify.dll
+0x00007ffbb5960000 - 0x00007ffbb5b54000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffba3630000 - 0x00007ffba365a000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffb5bbe0000 - 0x00007ffb5bc08000 	C:\Users\Public\wpilib\2020\jdk\bin\java.dll
+0x00007ffb5b990000 - 0x00007ffb5b9a6000 	C:\Users\Public\wpilib\2020\jdk\bin\zip.dll
+0x00007ffb834c0000 - 0x00007ffb834ca000 	C:\Users\Public\wpilib\2020\jdk\bin\jimage.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\Public\wpilib\2020\jdk\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.18362.592_none_e6c0b1911312be02;C:\Users\Public\wpilib\2020\jdk\bin\server
+
+VM Arguments:
+jvm_args: -Xmx64m -Xms64m -Dorg.gradle.appname=gradlew 
+java_command: org.gradle.wrapper.GradleWrapperMain build
+java_class_path (initial): c:\Users\egeok\Desktop\Robot Work 2020\traJaav\\gradle\wrapper\gradle-wrapper.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 67108864                                  {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 67108864                                  {product} {command line}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5835340                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122911450                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122911450                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+     bool UseCompressedClassPointers               = true                                 {lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                                 {lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+JAVA_HOME=C:\Users\Public\wpilib\2020\jdk
+CLASSPATH=c:\Users\egeok\Desktop\Robot Work 2020\traJaav\\gradle\wrapper\gradle-wrapper.jar
+PATH=C:\Users\Public\wpilib\2020\jdk\bin:C:\Program Files\National Instruments\Shared\OpenVINO\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\frc\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Opencv-4.0.0\opencv\build\x64\vc14\bin;C:\Program Files\Microsoft Network Monitor 3\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\Public\wpilib\2020\roborio\bin;C:\Users\Public\wpilib\2020\frccode;C:\Users\egeok\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\egeok\AppData\Local\Programs\Python\Python37-32\;C:\Users\egeok\AppData\Local\Microsoft\WindowsApps;C:\Users\Public\frc2019\roborio\bin;C:\Users\Public\frc2019\frccode;C:\Program Files (x86)\Atmel\Flip 3.4.7\bin;C:\Users\egeok\AppData\Local\GitHubDesktop\bin;C:\Users\egeok\AppData\Local\atom\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Users\Public\wpilib\2020\roborio\bin;C:\Users\Public\wpilib\2020\frccode
+USERNAME=egeok
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 142 Stepping 10, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS: Windows 10 , 64 bit Build 18362 (10.0.18362.329)
+
+CPU:total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 142 stepping 10, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, avx, avx2, aes, clmul, erms, 3dnowpref, lzcnt, ht, tsc, tscinvbit, bmi1, bmi2, adx, fma
+
+Memory: 4k page, system-wide physical 8078M (1917M free)
+TotalPageFile size 14526M (AvailPageFile size 49M)
+current process WorkingSet (physical memory assigned to process): 9M, peak: 9M
+current process commit charge ("private bytes"): 59M, peak: 123M
+
+vm_info: OpenJDK 64-Bit Server VM (11.0.4+11) for windows-amd64 JRE (11.0.4+11), built on Jul 18 2019 06:43:34 by "" with MS VC++ 15.8 (VS2017)
+
+END.

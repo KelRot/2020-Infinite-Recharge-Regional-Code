@@ -41,18 +41,7 @@ public class RobotContainer {
     
     private final DriveDistance autoCommand = new DriveDistance(driveSubsystem, 3);
 
-    private final Command Shoot =  
-    new ParallelCommandGroup(
-      new ConditionalCommand(
-        //koşul olursa
-            new InstantCommand(shooter_subsystem::feederFeed),
-        //koşul olmazsa
-            new InstantCommand(shooter_subsystem::feederBackUp), 
-
-            //koşul
-            shooter_subsystem::atSetpoint),
-      
-       readyShooters);
+   
     
    
     
@@ -72,9 +61,7 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(joystick, Button.kA.value).whileHeld(Shoot).whenReleased(
-      new ParallelCommandGroup(new InstantCommand(shooter_subsystem::stopFeeder),new InstantCommand(shooter_subsystem::stopFeeder)));
-
+    
       new JoystickButton(joystick, Button.kX.value).whileHeld(new InstantCommand(shooter_subsystem::useShootersFree)).whenReleased(new InstantCommand(shooter_subsystem::stopShooters));
   }
 
