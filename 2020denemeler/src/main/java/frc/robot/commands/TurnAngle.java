@@ -2,17 +2,19 @@ package frc.robot.commands;
 
 
 import frc.robot.subsystems.Drive;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 /**
  * An example command that uses an example subsystem.
  */
-public class DriveDistance extends CommandBase {
+public class TurnAngle extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final Drive m_subsystem;
   private DifferentialDrive drive;
-  private final float distance;
+  private final float angle;
+  private final PIDController gyroPID= new PIDController(0.5f, 0f,0f);
 
 
   /**
@@ -20,9 +22,9 @@ public class DriveDistance extends CommandBase {
    *
    * @param subsystem The subsystem used by this command.
    */
-  public DriveDistance(Drive subsystem,float dst) {
+  public TurnAngle(Drive subsystem,float _angle) {
     m_subsystem = subsystem;
-    distance= dst;
+    angle= _angle;
     drive=m_subsystem.getDifferentialDrive();
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(subsystem);
@@ -32,13 +34,15 @@ public class DriveDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+      gyroPID.setSetpoint(angle);
+      m_subsystem.resetGyro();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {    
-    
-    drive.arcadeDrive(Math.signum(distance) *0.7, 0);
+    double rotation = gyroPID.calculate(m_subsystem.getGyroHeading());
+    drive.arcadeDrive(0, rotation);
   }
 
   // Called once the command ends or is interrupted.
@@ -50,7 +54,7 @@ public class DriveDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_subsystem.getEncoderAverages()>=distance;
+    return gyroPID.atSetpoint();
 
   }
 }

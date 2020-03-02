@@ -11,6 +11,9 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
@@ -31,20 +34,28 @@ public class Shooter extends SubsystemBase {
   
 
    private final Encoder leftEncoder = new Encoder(ShooterConstants.LeftEncoderPorts[0],
-                                                   ShooterConstants.LeftEncoderPorts[1]);
+                                                   ShooterConstants.LeftEncoderPorts[1],false);
                                             
    private final Encoder rightEncoder = new Encoder(ShooterConstants.RightEncoderPorts[0],
-                                                     ShooterConstants.RightEncoderPorts[1]);
+                                                     ShooterConstants.RightEncoderPorts[1],true);
 
     private final PIDController controllerLeft = new PIDController(ShooterConstants.kP , 0,0);
     private final PIDController controllerRight = new PIDController(ShooterConstants.kP , 0,0);
 
     private final SimpleMotorFeedforward feedforward = new SimpleMotorFeedforward(0, ShooterConstants.kV);
    
+    private final NetworkTableEntry solEncoderHiz;
+    private final NetworkTableEntry sagEncoderHiz;
    
   public Shooter(){
-  controllerLeft.setTolerance(ShooterConstants.positionSetPointTolerance,ShooterConstants.velocitySetPointTolerance);
-  controllerRight.setTolerance(ShooterConstants.positionSetPointTolerance,ShooterConstants.velocitySetPointTolerance);
+
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable table = inst.getTable("Encoder Hizlari");
+
+    solEncoderHiz = table.getEntry("Sol Hiz");
+    sagEncoderHiz = table.getEntry("Sag Hiz");
+  controllerLeft.setTolerance(ShooterConstants.positionSetPointTolerance);
+  controllerRight.setTolerance(ShooterConstants.positionSetPointTolerance);
        
   leftMotor.configVoltageCompSaturation(12);
   rightMotor.configVoltageCompSaturation(12);
@@ -55,6 +66,8 @@ public class Shooter extends SubsystemBase {
 
   leftEncoder.setDistancePerPulse(ShooterConstants.encoderRPP);
   rightEncoder.setDistancePerPulse(ShooterConstants.encoderRPP);
+
+  
       
          
         
@@ -62,8 +75,14 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.print("SOL ENCODER: "+leftEncoder.get());
-    System.out.print("RIGHT ENCODER: "+rightEncoder.get()+"\n");
+    controllerLeft.calculate(leftEncoder.getRate());
+    controllerRight.calculate(rightEncoder.getRate());
+    System.out.print("SOL ENCODER: "+leftEncoder.getRate());
+    
+    System.out.print("RIGHT ENCODER: "+rightEncoder.getRate()+"\n");
+    System.out.println(controllerLeft.getSetpoint()+" " +controllerLeft.atSetpoint()+" " +controllerRight.atSetpoint());
+    solEncoderHiz.setDouble(leftEncoder.getRate());
+    sagEncoderHiz.setDouble(rightEncoder.getRate());
 
   }
 
@@ -72,13 +91,13 @@ public class Shooter extends SubsystemBase {
   public void useShooters(double setPoint){
 
     //!!!!!!!!!! COMMENT THIS WHEN YOU GET DISTANCE DATA !!!!!!!!!1
-    setPoint = ShooterConstants.setPointRPS;
+     setPoint = ShooterConstants.setPointRPS;
 
     double leftOutput = feedforward.calculate(setPoint) + controllerLeft.calculate(leftEncoder.getRate(), setPoint);
     double rightOutput = feedforward.calculate(setPoint) + controllerRight.calculate(rightEncoder.getRate(), setPoint);
     
-    leftMotor.set(ControlMode.Current,leftOutput);
-    rightMotor.set(ControlMode.Current, rightOutput);
+    leftMotor.set(VictorSPXControlMode.PercentOutput,leftOutput);
+    rightMotor.set(VictorSPXControlMode.PercentOutput,-rightOutput);
     
 
   }

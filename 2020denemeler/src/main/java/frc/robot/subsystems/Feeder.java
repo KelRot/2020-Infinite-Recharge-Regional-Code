@@ -14,7 +14,7 @@ import frc.robot.Constants.FeederConstants;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Feeder extends SubsystemBase {
   /**
@@ -22,14 +22,14 @@ public class Feeder extends SubsystemBase {
    */
   private VictorSPX motor1;
   private VictorSPX motor2;
-  private DigitalInput intake_Sensor;
-  private DigitalInput shooter_Sensor;
+  private AnalogInput intake_Sensor;
+  private AnalogInput shooter_Sensor;
   public Feeder() {
-    motor1=new VictorSPX(Constants.PortConstants.feederMotor1);
-    motor2=new VictorSPX(Constants.PortConstants.feederMotor2);
+    motor1=new VictorSPX(Constants.FeederConstants.upMotorID);
+    motor2=new VictorSPX(Constants.FeederConstants.downMotorID);
     
-    intake_Sensor=new DigitalInput(Constants.PortConstants.intakeSensorPort);
-    shooter_Sensor=new DigitalInput(Constants.PortConstants.shooterSensorPort);
+    intake_Sensor=new AnalogInput(Constants.FeederConstants.intakeSensorPort);
+    shooter_Sensor=new AnalogInput(Constants.FeederConstants.shooterSensorPort);
   }
 
   @Override
@@ -44,16 +44,25 @@ public class Feeder extends SubsystemBase {
     motor1.set(VictorSPXControlMode.PercentOutput,speed);
     motor2.set(VictorSPXControlMode.PercentOutput,speed);
   }
+  public void runFeederBackwards( )
+  {
+    double speed=FeederConstants.feederSpeed;
+    speed= -speed;
+    motor1.set(VictorSPXControlMode.PercentOutput,speed);
+    motor2.set(VictorSPXControlMode.PercentOutput,speed);
+  }
+
   public void stopFeeder()
   {
     double speed=0.0;
     motor1.set(VictorSPXControlMode.PercentOutput,speed);
     motor2.set(VictorSPXControlMode.PercentOutput,speed);
   }
-  public boolean getIntakeSensor(){
-    return intake_Sensor.get();
+  public boolean getIntakeSensor(){//ölç
+    return intake_Sensor.getVoltage()>0.5;
   }
   public boolean getShooterSensor(){
-    return shooter_Sensor.get();
+    return shooter_Sensor.getVoltage()>0.5;
+
   }
 }

@@ -20,8 +20,9 @@ import frc.robot.Constants.DriveConstants;
 public class Drive extends SubsystemBase {
   private final Talon topLeft = new Talon(DriveConstants.onSol);
   private final Talon topRight = new Talon(DriveConstants.onSag);
-  private final Talon bottomLeft = new Talon(DriveConstants.arkaSag);
-  private final Talon bottomRight = new Talon(DriveConstants.arkaSol);
+
+  private final Talon bottomLeft = new Talon(DriveConstants.arkaSol);
+  private final Talon bottomRight = new Talon(DriveConstants.arkaSag);
 
   private final SpeedControllerGroup left = new SpeedControllerGroup(topLeft, bottomLeft);
   private final SpeedControllerGroup right = new SpeedControllerGroup(topRight, bottomRight);
@@ -57,6 +58,10 @@ public class Drive extends SubsystemBase {
 
   public double getGyroHeading(){
     return gyro.getAngle();
+  }
+
+  public void resetGyro(){
+    gyro.reset();
   }
 
   public void setVoltage(double voltage){
